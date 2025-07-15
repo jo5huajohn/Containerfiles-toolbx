@@ -1,0 +1,16 @@
+FROM quay.io/fedora/fedora-toolbox:42
+
+ARG NAME=fedora-42-base
+ARG VERSION=42
+LABEL com.github.containers.toolbox="true" \
+      name="$NAME" \
+      version="$VERSION" \
+      usage="This image is meant to be used with the toolbox(1) command" \
+      summary="Base image of Fedora 42 with some QoL applications"
+
+RUN dnf --assumeyes install \
+	fzf zoxide \
+	clang-tools-extra gcc make \
+	vim \
+	--setopt=install_weak_deps=false
+RUN dnf clean all
