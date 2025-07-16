@@ -11,6 +11,5 @@ LABEL com.github.containers.toolbox="true" \
 RUN dnf --assumeyes install \
 	fzf zoxide \
 	clang-tools-extra gcc make \
-	vim \
-	--setopt=install_weak_deps=false
+	vim
 RUN dnf clean all
