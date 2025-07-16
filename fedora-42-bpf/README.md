@@ -10,7 +10,7 @@ Container with everything required to build eBPF programs using libbpf
 - clang-tools-extra (For clangd)
 - cmake
 - fzf
-- libbpf-devel (For bpf/bpf\_helpers.h>
+- libbpf-devel (For bpf/bpf\_helpers.h)
 - make
 - vim
 - zoxide
