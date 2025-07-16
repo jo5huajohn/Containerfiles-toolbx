@@ -12,5 +12,4 @@ RUN dnf --assumeyes install \
 	fzf zoxide \
 	bear bpftool clang clang-tools-extra cmake libbpf-devel make \
 	vim \
-	--setopt=install_weak_deps=false
 RUN dnf clean all
