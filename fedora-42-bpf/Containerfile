@@ -2,6 +2,7 @@ FROM quay.io/fedora/fedora-toolbox:42
 
 ARG NAME=fedora-42-bpf
 ARG VERSION=42
+
 LABEL com.github.containers.toolbox="true" \
       name="$NAME" \
       version="$VERSION" \
@@ -9,7 +10,5 @@ LABEL com.github.containers.toolbox="true" \
       summary="Fedora 42 image focused on building eBPF programs"
 
 RUN dnf --assumeyes install \
-	fzf zoxide \
-	bear bpftool clang clang-tools-extra cmake libbpf-devel make \
-	vim \
-RUN dnf clean all
+	bear bpftool clang clang-tools-extra cmake fzf libbpf-devel make vim zoxide \
+	&& dnf clean all
