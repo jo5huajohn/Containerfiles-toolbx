@@ -2,36 +2,39 @@ FROM quay.io/toolbx/ubuntu-toolbox:25.04
 
 ARG NAME=ubuntu-reseau
 ARG VERSION=25.04
+
 LABEL com.github.containers.toolbox="true" \
       name="$NAME" \
       version="$VERSION" \
       usage="This image is meant to be used with the toolbox(1) command" \
       summary="Ubuntu 25.04 image for self hosted server development"
 
-RUN apt-get update \
-  && apt-get install -y \
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+
+RUN curl -fsSL 'https://dl.cloudsmith.io/public/caddy/xcaddy/gpg.key' | gpg --dearmor -o /usr/share/keyrings/caddy-xcaddy-archive-keyring.gpg \
+  && curl -fsSL 'https://dl.cloudsmith.io/public/caddy/xcaddy/debian.deb.txt' | tee /etc/apt/sources.list.d/caddy-xcaddy.list \
+  && curl -sLf 'https://apt.releases.hashicorp.com/gpg' | gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg \
+  && echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(grep -oP '(?<=UBUNTU_CODENAME=).*' /etc/os-release || lsb_release -cs) main" | tee /etc/apt/sources.list.d/hashicorp.list \
+  && apt-get update \
+  && apt-get install --no-install-recommends --yes \
     apt-transport-https \
-    curl \
-    ubuntu-keyring \
     fzf \
     pipx \
     python3 \
     software-properties-common \
+    terraform \
+    ubuntu-keyring \
     vim \
+    xcaddy \
     zoxide \
-  && curl -1sLf 'https://dl.cloudsmith.io/public/caddy/xcaddy/gpg.key' | gpg --dearmor -o /usr/share/keyrings/caddy-xcaddy-archive-keyring.gpg \
-  && curl -1sLf 'https://dl.cloudsmith.io/public/caddy/xcaddy/debian.deb.txt' | tee /etc/apt/sources.list.d/caddy-xcaddy.list \
-  && wget -O - https://apt.releases.hashicorp.com/gpg | gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg \
-  && echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(grep -oP '(?<=UBUNTU_CODENAME=).*' /etc/os-release || lsb_release -cs) main" | tee /etc/apt/sources.list.d/hashicorp.list \
-  && apt-get update \
+  && apt-get clean \
+  && rm -rf /var/lib/apt/lists/* \
   && pipx ensurepath \
   && pipx ensurepath --global \
-  && apt-get install -y \
-    terraform \
-    xcaddy \
-  && pipx install --global --include-deps ansible \
-  && apt-get autoremove -y
+  && pipx install --global --include-deps ansible
 
-RUN wget https://go.dev/dl/go1.25.0.linux-amd64.tar.gz \
-  && tar -C /usr/local -xzf go1.25.0.linux-amd64.tar.gz \
-  && echo "Run export PATH=\$PATH:/usr/local/go/bin"
+RUN curl -fsSL --output go.linux-amd64.tar.gz 'https://go.dev/dl/go1.25.0.linux-amd64.tar.gz' \
+  && tar -C /usr/local -xzf go.linux-amd64.tar.gz \
+  && rm go.linux-amd64.tar.gz
+
+ENV PATH="/usr/local/go/bin:${PATH}"
