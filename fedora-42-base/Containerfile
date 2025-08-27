@@ -10,7 +10,10 @@ LABEL com.github.containers.toolbox="true" \
       summary="Base image of Fedora 42 with some QoL applications"
 
 RUN dnf --assumeyes install \
-	fzf zoxide \
-	clang-tools-extra gcc make \
+	clang-tools-extra \
+	fzf \
+	gcc \
+	make \
 	vim \
+	zoxide \
 	&& dnf clean all

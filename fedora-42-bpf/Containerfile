@@ -10,5 +10,14 @@ LABEL com.github.containers.toolbox="true" \
       summary="Fedora 42 image focused on building eBPF programs"
 
 RUN dnf --assumeyes install \
-	bear bpftool clang clang-tools-extra cmake fzf libbpf-devel make vim zoxide \
+	bear \
+	bpftool \
+	clang \
+	clang-tools-extra \
+	cmake \
+	fzf \
+	libbpf-devel \
+	make \
+	vim \
+	zoxide \
 	&& dnf clean all
