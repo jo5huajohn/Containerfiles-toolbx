@@ -1,6 +1,6 @@
 FROM quay.io/fedora/fedora-toolbox:42
 
-ARG NAME=fedora-42-base
+ARG NAME=fedora-base
 ARG VERSION=42
 
 LABEL com.github.containers.toolbox="true" \
