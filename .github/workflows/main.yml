@@ -13,7 +13,7 @@ jobs:
 
     strategy:
       matrix:
-        dir: [fedora-42-base, fedora-42-bpf, ubuntu-25.04-reseau]
+        dir: [fedora-42-base, fedora-42-bpf, fedora-python, ubuntu-25.04-reseau]
 
     steps:
       - name: Checkout repo

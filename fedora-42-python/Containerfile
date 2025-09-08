@@ -16,3 +16,4 @@ RUN dnf --assumeyes install \
 	ruff \
 	zoxide \
 	&& dnf clean all
+	
