@@ -28,9 +28,8 @@ jobs:
         id: extract
         run: |
           file="./${{ matrix.dir }}/Containerfile"
-          name=$(grep -i 'label' "$file" | grep -Eo 'name="[^"]+"' | cut -d'"' -f2)
-          version=$(grep -i 'label' "$file" | grep -Eo 'version="[^"]+"' | cut -d'"' -f2)
-
+          name=$(awk -F'=' '/\<NAME=/ { print $2 }' $file)
+          version=$(awk -F'=' '/\<VERSION=/ { print $2 }' $file)
           echo "Found name=$name, version=$version"
 
           # Set outputs
@@ -38,8 +37,5 @@ jobs:
           echo "version=$version" >> $GITHUB_OUTPUT
 
       - name: Build image with Podman
-        run:
-          podman build \
-            --squash \
-            --tag remote/${{ steps.extract.outputs.name }}:${{ steps.extract.outputs.version }} \
-            ./${{ matrix.dir }}
+        run: |
+          podman build --squash --tag remote/${{ steps.extract.outputs.name }}:${{ steps.extract.outputs.version }} ./${{ matrix.dir }}
