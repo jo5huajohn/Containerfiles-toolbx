@@ -9,7 +9,7 @@ LABEL com.github.containers.toolbox="true" \
       usage="This image is meant to be used with the toolbox(1) command" \
       summary="Ubuntu 25.04 image for self hosted server development"
 
-RUN curl -fsSL 'https://dl.cloudsmith.io/public/caddy/stable/gpg.key' | gpg --dearmor -o /usr/share/keyrings/caddy-stable`-archive-keyring.gpg \
+RUN curl -fsSL 'https://dl.cloudsmith.io/public/caddy/stable/gpg.key' | gpg --dearmor -o /usr/share/keyrings/caddy-stable-archive-keyring.gpg \
   && curl -fsSL 'https://dl.cloudsmith.io/public/caddy/stable/debian.deb.txt' | tee /etc/apt/sources.list.d/caddy-stable.list \
   && curl -sLf 'https://apt.releases.hashicorp.com/gpg' | gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg \
   && echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(grep -oP '(?<=UBUNTU_CODENAME=).*' /etc/os-release || lsb_release -cs) main" | tee /etc/apt/sources.list.d/hashicorp.list \
