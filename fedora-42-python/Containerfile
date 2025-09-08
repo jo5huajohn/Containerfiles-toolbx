@@ -1,0 +1,18 @@
+FROM quay.io/fedora/fedora-toolbox:42
+
+ARG NAME=fedora-python
+ARG VERSION=42
+
+LABEL com.github.containers.toolbox="true" \
+      name="$NAME" \
+      version="$VERSION" \
+      usage="This image is meant to be used with the toolbox(1) command" \
+      summary="Fedora 42 image focused on building python programs"
+
+RUN dnf --assumeyes install \
+	fzf \
+	python-virtualenv \
+	neovim \
+	ruff \
+	zoxide \
+	&& dnf clean all
