@@ -12,6 +12,6 @@ Container with everything required to build eBPF programs using libbpf
 - fzf
 - libbpf-devel (For bpf/bpf\_helpers.h)
 - make
-- vim
+- neovim
 - zoxide
 

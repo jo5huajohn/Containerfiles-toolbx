@@ -8,6 +8,6 @@ Base image of Fedora 42 with some QoL applications
 - fzf
 - gcc
 - make
-- vim
+- neovim
 - zoxide
 
