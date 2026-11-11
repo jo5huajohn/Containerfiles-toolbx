@@ -1,0 +1,27 @@
+FROM quay.io/toolbx/ubuntu-toolbox:26.04
+
+ARG NAME=ubuntu-yocto
+ARG VERSION=26.04
+
+LABEL com.github.containers.toolbox="true" \
+      name="$NAME" \
+      version="$VERSION" \
+      usage="This image is meant to be used with the toolbox(1) command" \
+      summary="Ubuntu 26.04 image for developing Yocto images"
+
+RUN apt-get update && \
+    apt-get install --no-install-recommends --yes \
+        build-essential chrpath cpio debianutils \
+	diffstat file fzf gawk gcc git iputils-ping \
+	libacl1 libcrypt-dev locales locales-all \
+	minicom python3 python3-git python3-jinja2 \
+	python3-pexpect python3-pip python3-subunit \
+	python3-websockets socat texinfo unzip vim \
+	wget xz-utils zoxide zstd \
+  && apt-get clean \
+  && rm -rf /var/lib/apt/lists/*
+
+ENV LC_ALL en_US.UTF-8
+ENV LANG en_US.UTF-8
+ENV LANGUAGE en_US.UTF-8
+

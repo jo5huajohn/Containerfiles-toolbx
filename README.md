@@ -9,8 +9,9 @@ Containerfiles for toolbx images
 ```shell
 podman build \
     --squash \
-    --tag localhost/fedora-base:42 \
+    --tag fedora-base:42 \
     /path-to-Containerfile-dir
+
 ```
 
 ## Running

@@ -1,0 +1,29 @@
+FROM quay.io/toolbx/ubuntu-toolbox:26.04
+
+ARG NAME=jekyll-devel
+ARG VERSION=26.04
+
+LABEL com.github.containers.toolbox="true" \
+      name="$NAME" \
+      version="$VERSION" \
+      usage="This image is meant to be used with the toolbox(1) command" \
+      summary="Ubuntu 26.04 image for developing with Jekyll"
+
+RUN apt-get update && \
+    DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends --yes \
+        locales vim zoxide \
+        ruby-full build-essential zlib1g-dev && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+RUN locale-gen en_US.UTF-8
+
+ENV LANG=en_US.UTF-8
+ENV LANGUAGE=en_US:en
+ENV LC_ALL=en_US.UTF-8
+ENV GEM_HOME=/opt/gems
+ENV PATH="${GEM_HOME}/bin:${PATH}"
+
+RUN mkdir "${GEM_HOME}" && \
+    gem install jekyll bundler
+
