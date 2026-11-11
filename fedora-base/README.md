@@ -1,6 +1,6 @@
-# Fedora-42-base
+# Fedora-base
 
-Base image of Fedora 42 with some QoL applications
+Base image of Fedora with some QoL applications
 
 ## Installed Applications
 
